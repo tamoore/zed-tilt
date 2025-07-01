@@ -1,0 +1,47 @@
+# Test Tiltfile with .tilt extension
+# This file tests that .tilt extension is properly recognized
+
+# Load external modules
+load('ext://helm_resource', 'helm_resource')
+load('ext://restart_process', 'docker_build_with_restart')
+
+# Configuration
+config.define_string('environment', args=True, default='dev')
+config.define_bool('enable_debug', args=True, default=False)
+cfg = config.parse()
+
+# Docker build
+docker_build(
+    'myapp/api',
+    context='./api',
+    dockerfile='./api/Dockerfile',
+    live_update=[
+        sync('./api/src', '/app/src'),
+        run('pip install -r requirements.txt', trigger='./api/requirements.txt'),
+    ]
+)
+
+# Kubernetes resources
+k8s_yaml([
+    'k8s/deployment.yaml',
+    'k8s/service.yaml'
+])
+
+# Resource configuration
+k8s_resource(
+    'api-deployment',
+    port_forwards='8080:8080'
+)
+
+# Local resource
+local_resource(
+    'test-api',
+    cmd='cd api && python -m pytest',
+    deps=['./api/tests']
+)
+
+# Conditional configuration
+if cfg.get('enable_debug'):
+    local('echo "Debug mode enabled"')
+
+print(f'Environment: {cfg.get("environment")}')

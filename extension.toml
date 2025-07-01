@@ -1,0 +1,7 @@
+id = "tilt"
+name = "Tilt"
+version = "0.1.0"
+schema_version = 1
+authors = ["Todd Moore <todd@example.com>"]
+description = "Language support for Tilt - the microservice development toolkit for teams that deploy to Kubernetes"
+repository = "https://github.com/toddmoore/zed-tilt"

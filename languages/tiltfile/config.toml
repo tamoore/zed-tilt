@@ -1,0 +1,44 @@
+name = "Tiltfile"
+scope = "source.python"
+injection_regex = "^(tiltfile|starlark|python)$"
+file_types = ["Tiltfile", "tiltfile", "*.star", "*.tilt"]
+roots = ["Tiltfile", "tiltfile"]
+comment_tokens = ["#"]
+grammar = "python"
+block_comment_tokens = [
+    { start = '"""', end = '"""' },
+    { start = "'''", end = "'''" },
+]
+brackets = [
+    { start = "{", end = "}", close = true, newline = true },
+    { start = "[", end = "]", close = true, newline = true },
+    { start = "(", end = ")", close = true, newline = true },
+]
+autoclose_before = ";,.|=}])> \t\n"
+surrounds = [
+    { start = "(", end = ")" },
+    { start = "[", end = "]" },
+    { start = "{", end = "}" },
+    { start = '"', end = '"' },
+    { start = "'", end = "'" },
+]
+word_characters = ["_"]
+
+[language_servers.tilt]
+name = "tilt"
+language_ids = ["tiltfile"]
+
+[language_servers.tilt.initialization_options]
+completionEnabled = true
+hoverEnabled = true
+diagnosticsEnabled = true
+
+[formatter]
+external = { command = "buildifier", arguments = ["-type=bzl", "-"] }
+
+[code_actions]
+"source.organizeImports" = true
+
+[debugger]
+name = "tilt"
+languages = ["tiltfile"]

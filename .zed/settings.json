@@ -1,0 +1,39 @@
+{
+  "languages": {
+    "Tiltfile": {
+      "tab_size": 4,
+      "hard_tabs": false,
+      "formatter": {
+        "external": {
+          "command": "buildifier",
+          "arguments": ["-type=bzl", "-"]
+        }
+      }
+    }
+  },
+  "lsp": {
+    "tilt": {
+      "initialization_options": {
+        "completionEnabled": true,
+        "hoverEnabled": true,
+        "diagnosticsEnabled": true
+      }
+    }
+  },
+  "file_types": {
+    "Tiltfile": ["Tiltfile", "tiltfile"],
+    "Starlark": ["*.star", "*.bzl"]
+  },
+  "auto_install_extensions": {
+    "tilt": true
+  },
+  "format_on_save": "on",
+  "code_actions_on_format": {
+    "source.organizeImports": true,
+    "source.fixAll": true
+  },
+  "show_inline_completions": true,
+  "inlay_hints": {
+    "enabled": true
+  }
+}
