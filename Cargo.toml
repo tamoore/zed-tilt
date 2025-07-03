@@ -1,6 +1,6 @@
 [package]
-name = "tilt-extension"
-version = "0.1.0"
+name = "zed-tilt"
+version = "0.2.0"
 edition = "2021"
 
 [lib]
@@ -8,3 +8,7 @@ crate-type = ["cdylib"]
 
 [dependencies]
 zed_extension_api = "0.1.0"
+serde_json = "1.0"
+
+[build-dependencies]
+toml_edit = "0.22"

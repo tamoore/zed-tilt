@@ -4,140 +4,78 @@ A Zed extension that provides language support for [Tilt](https://tilt.dev/) - t
 
 ## Features
 
-- **Syntax Highlighting**: Full syntax highlighting for Tiltfile and Starlark files
-- **Language Server**: Integration with Tilt's LSP for:
-  - Code completion
-  - Hover information
-  - Diagnostics and error checking
-  - Symbol navigation
-- **File Recognition**: Automatic detection of `Tiltfile`, `tiltfile`, and `*.star` files
-- **Code Formatting**: Support for formatting Tiltfiles using Buildifier
-- **Outline View**: Navigate through functions, resources, and configurations
-- **Auto-completion**: Intelligent suggestions for Tilt-specific functions and Kubernetes resources
+- **Syntax Highlighting**: Full Starlark syntax highlighting for Tiltfiles
+- **Language Server Protocol**: Integrated Tilt LSP for intelligent code completion, hover information, and go-to-definition
+- **File Recognition**: Automatically recognizes `Tiltfile`, `tiltfile`, `.tiltfile`, and `.tilt` files
+- **Smart Indentation**: Proper Python-style indentation support
+- **Bracket Matching**: Intelligent bracket completion and matching
+- **Runtime Error Detection**: Errors are detected when Tilt is running and evaluating your Tiltfile
+
+## Prerequisites
+
+- [Tilt CLI](https://docs.tilt.dev/install.html) must be installed on your system
+- The Tilt LSP server is bundled with the Tilt CLI
 
 ## Installation
 
-### From Zed Extensions
+## Usage
 
-1. Open Zed
-2. Open the command palette (`Cmd+Shift+P` on macOS, `Ctrl+Shift+P` on Linux/Windows)
-3. Type "zed: extensions" and select it
-4. Search for "Tilt"
-5. Click "Install"
+Once installed, the extension will automatically activate when you open any Tiltfile. The extension provides:
 
-### Development Installation
+- **Syntax highlighting** for Starlark/Python syntax
+- **LSP features** including:
+  - Code completion for Tilt functions
+  - Hover information with documentation
+  - Go to definition
+  - Symbol search
+  - Parameter hints and signature help
 
-1. Clone this repository
-2. Open Zed
-3. Open the command palette and run "zed: install dev extension"
-4. Select the `zed-tilt` directory
+## Error Detection
 
-## Requirements
+**Important**: Unlike traditional language servers, the Tilt LSP does not provide real-time syntax error diagnostics in the editor. This is because Tilt errors are primarily **runtime errors** that occur when Tilt evaluates your Tiltfile.
 
-This extension automatically downloads and manages the Tilt binary for language server functionality. No manual installation of Tilt is required.
+To see errors in your Tiltfile:
 
-For code formatting support, you may optionally install [Buildifier](https://github.com/bazelbuild/buildtools/tree/master/buildifier):
+1. **Run Tilt**: Execute `tilt up` in your terminal
+2. **Check Tilt UI**: Open the Tilt web UI (usually http://localhost:10350) to see detailed error information
+3. **Terminal Output**: Tilt will display syntax and runtime errors in the terminal
 
-```bash
-# On macOS with Homebrew
-brew install buildifier
-
-# On Linux/other systems, download from releases:
-# https://github.com/bazelbuild/buildtools/releases
-```
+This behavior is consistent with how Tilt works - it's designed to catch configuration and deployment issues when actually running, not through static analysis.
 
 ## Supported File Types
 
-- `Tiltfile` - Main Tilt configuration file
-- `tiltfile` - Alternative naming
-- `*.star` - Starlark files used by Tilt
+The extension recognizes the following file patterns:
 
-## Language Server Features
+- `Tiltfile`
+- `tiltfile`
+- `.tiltfile`
+- `.tilt`
 
-The extension provides full language server support through Tilt's built-in LSP:
+## Architecture
 
-- **Completions**: Auto-complete for Tilt functions, Kubernetes resources, and configuration options
-- **Hover**: Documentation and type information on hover
-- **Diagnostics**: Real-time error checking and warnings
-- **Go to Definition**: Navigate to function and variable definitions
-- **Find References**: Find all references to symbols
-- **Symbol Search**: Quickly find functions and resources in your workspace
+This extension is built using the Zed Extension API and follows the same architectural patterns as the [Starlark extension](https://github.com/zaucy/zed-starlark). Key components:
 
-## Configuration
+- **Language Server Integration**: Uses the Tilt CLI's built-in LSP server
+- **Starlark Grammar**: Leverages the Tree-sitter Starlark grammar for syntax highlighting
+- **Binary Discovery**: Automatically finds the `tilt` binary in your PATH
 
-The extension can be configured through Zed's settings. Add the following to your `settings.json`:
-
-```json
-{
-  "lsp": {
-    "tilt": {
-      "initialization_options": {
-        "completionEnabled": true,
-        "hoverEnabled": true,
-        "diagnosticsEnabled": true
-      }
-    }
-  }
-}
-```
-
-## Tilt-Specific Features
-
-This extension recognizes and provides enhanced support for Tilt-specific functions:
-
-### Resource Management
-- `k8s_yaml()` - Deploy Kubernetes YAML
-- `docker_build()` - Build Docker images
-- `k8s_resource()` - Configure Kubernetes resources
-- `local_resource()` - Run local commands
-- `helm()` - Deploy Helm charts
-- `kustomize()` - Apply Kustomize configurations
-
-### Configuration
-- `config.define_string()` - Define string configuration
-- `config.define_bool()` - Define boolean configuration  
-- `config.define_string_list()` - Define string list configuration
-- `config.parse()` - Parse configuration values
-
-### Development Workflow
-- `port_forward()` - Set up port forwarding
-- `local()` - Execute local commands
-- `read_file()` - Read file contents
-- `blob()` - Include binary data
+## Development
 
 ## Contributing
-
-This extension is a port of the official Tilt VSCode extension. Contributions are welcome!
 
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
-4. Test the extension locally
+4. Test thoroughly
 5. Submit a pull request
-
-## Development
-
-To work on this extension:
-
-1. Install Rust via [rustup](https://rustup.rs/)
-2. Clone this repository
-3. Make changes to the extension
-4. Install as a dev extension in Zed
-5. Test your changes
-
-### Building
-
-```bash
-cargo build --target wasm32-wasi
-```
 
 ## License
 
-This extension is licensed under the MIT License. See [LICENSE](LICENSE) for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Links
+## Acknowledgments
 
-- [Tilt Documentation](https://docs.tilt.dev/)
-- [Tilt GitHub Repository](https://github.com/tilt-dev/tilt)
-- [Starlark Language](https://github.com/bazelbuild/starlark)
-- [Zed Extensions Documentation](https://zed.dev/docs/extensions)
+- Built on the [Zed Extension API](https://github.com/zed-industries/zed)
+- Inspired by the [Starlark Zed Extension](https://github.com/zaucy/zed-starlark)
+- Uses the [Tree-sitter Starlark grammar](https://github.com/tree-sitter-grammars/tree-sitter-starlark)
+- Integrates with the [Tilt LSP server](https://docs.tilt.dev/lsp.html)

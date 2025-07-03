@@ -1,7 +1,16 @@
 id = "tilt"
 name = "Tilt"
-version = "0.1.0"
+description = "Language support for Tilt - the microservice development toolkit for teams that deploy to Kubernetes"
+version = "0.2.0"
 schema_version = 1
 authors = ["Todd Moore <todd@example.com>"]
-description = "Language support for Tilt - the microservice development toolkit for teams that deploy to Kubernetes"
 repository = "https://github.com/toddmoore/zed-tilt"
+
+[language_servers.tilt]
+name = "Tilt LSP"
+language = "Tiltfile"
+languages = ["Tiltfile"]
+
+[grammars.starlark]
+repository = "https://github.com/tree-sitter-grammars/tree-sitter-starlark"
+commit = "b31a616aac5d05f927f3f9dd809789db7805b632"

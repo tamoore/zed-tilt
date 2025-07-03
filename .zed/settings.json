@@ -2,13 +2,7 @@
   "languages": {
     "Tiltfile": {
       "tab_size": 4,
-      "hard_tabs": false,
-      "formatter": {
-        "external": {
-          "command": "buildifier",
-          "arguments": ["-type=bzl", "-"]
-        }
-      }
+      "hard_tabs": false
     }
   },
   "lsp": {
