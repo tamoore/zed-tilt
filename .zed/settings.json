@@ -15,7 +15,7 @@
     }
   },
   "file_types": {
-    "Tiltfile": ["Tiltfile", "tiltfile"],
+    "Tiltfile": ["Tiltfile", "tiltfile", "tilt"],
     "Starlark": ["*.star", "*.bzl"]
   },
   "auto_install_extensions": {
